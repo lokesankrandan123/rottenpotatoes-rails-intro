@@ -6,11 +6,11 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>
+      <th class="<%= @class_title %>">
         <%= link_to "Movie Title", sort_movies_path('title'), id: "title_header" %>
       </th>
       <th>Rating</th>
-      <th>
+      <th class="<%= @class_release_date %>">
         <%= link_to "Release Date", sort_movies_path('release_date'), id: "release_date_header" %>
       </th>
       <th>More Info</th>

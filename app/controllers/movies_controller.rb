@@ -48,6 +48,7 @@ class MoviesController < ApplicationController
       @class_title = ''
       @class_release_date = 'hilite bg-warning'
     end
+    render :template => "movies/index"
   end
 
   private
