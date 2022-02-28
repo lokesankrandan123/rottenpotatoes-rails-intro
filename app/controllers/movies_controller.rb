@@ -35,7 +35,7 @@ class MoviesController < ApplicationController
     
     flash.keep
     
-    if !params.has_key?(:sort) and !params.has_key?(:ratings)
+    if !params.has_key?(:sort) and !params.has_key?(:ratings) and session
       redirect_to movies_path([:ratings] => [session[:ratings].keys] ,:sort => session[:sort])
     end
   end
