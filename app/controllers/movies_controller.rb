@@ -11,20 +11,32 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
     
     if params.has_key? :sort
-      if params[:sort] == 'title'
-        @movies = Movie.order('title ASC')
+      session[:sort] = params[:sort]
+    end
+    
+    if params.has_key? :ratings
+      session[:ratings] = params[:ratings]
+    end
+    
+    if session.has_key? :ratings
+      @checked_ratings = session[:ratings]
+      @movies = @movies.with_ratings(@checked_ratings.keys)
+    end
+    
+    if session.has_key? :sort
+      if session[:sort] == 'title'
+        @movies = @movies.order('title ASC')
         @class_title = 'hilite bg-warning'
-        @class_release_date = ''
-      elsif params[:sort] == 'release_date'
-        @movies = Movie.order('release_date ASC')
-        @class_title = ''
+      elsif session[:sort] == 'release_date'
+        @movies = @movies.order('release_date ASC')
         @class_release_date = 'hilite bg-warning'
       end
     end
     
-    if params.has_key? :ratings
-      @checked_ratings = params[:ratings]
-      @movies = Movie.with_ratings(@checked_ratings.keys)
+    flash.keep
+    
+    if !params.has_key?(:sort) and !params.has_key?(:ratings)
+      redirect_to movies_path([:ratings] => [session[:ratings].keys] ,:sort => session[:sort])
     end
   end
 
